@@ -1,0 +1,12 @@
+▌I want you to build a program to simulate the sensitivity of SPHEREx and WISE to subtle warm dust excesses, for instance at 3-5 microns.  The main question I want the program to enable exploring is
+▌how much (if any) extra sensitivity you get to IR excesses from using SPHEREx when fitting SED fitting compared against Gaia+2MASS+WISE.  For WISE consider W1 and W2 only.  To begin with, answer
+▌this question by treating the stellar emission only as a blackbody, and performing the relevant integrations over the respective bandpasses.  The goal is to quantify the effects of the WISE
+▌broadband averaging.  I think the best way to explore this question would be to build a webapp (using javascript + HTML) that assumes emission from two blackbodies: a star (assume by default
+▌Teff=5800 K, distance 10 parsecs) and dust around the star (assume by default Tdust=300 K, and fdust/fstar=1e-3).  Provide sliders for stellar temperature, system distance, dust temperature, and
+▌fdust/fstar.  Let fdust/fstar slider span 1e-7 to 1e-1.  Let distances span 5 to 500 pc.  Let stellar temperatures span 2500 to 8000 K and dust temperatures span 100 to 1000 K.  The app should have
+▌a clickable button to turn SPHEREx on or off.  The app needs to calculate the flux from the two blackbodies, and integrate the flux over mock Gaia, 2MASS, WISE, and SPHEREx bandpasses to produce
+▌mock photometric measurements WITH TYPICAL UNCERTAINTIES for each mission.  It then needs to assess whether the emission from the dust is detected - if it is, the app should show a nice green "IR
+▌excess detected (XX.Xσ)" text, otherwise a red "Excess not detected (X.Xσ)".  Set the threshold for detection at 5 sigma.  The condition for detection when only WISE is present is whether W1 and W2
+▌are at least 5-sigma above the prediction of a single-blackbody fit to the mock photometric data (from Gaia, 2MASS, and WISE W1 W2 fitted all together).  When SPHEREx is being used, it's whether an
+▌effective band from 2.40 to 5.01 microns ("Bands 4,5,6" from the Crill paper) is at lesat 5-sigma above the prediction of a single-blackbody fit to the mock data (from Gaia, 2MASS, and SPHEREx 0.75
+▌to 5.01 micron simultaneous).
