@@ -356,7 +356,8 @@ function compute() {
   // Update status
   detectionEl.textContent = detectionText;
   detectionEl.className = `detect ${detected ? "ok" : "bad"}`;
-  fitSummaryEl.textContent = `Single-BB fit: T = ${fit.T} K, s = ${fit.s.toExponential(3)}, χ² = ${fit.chi2.toFixed(2)}; Two-BB χ² = ${fit2.chi2.toFixed(2)}  ${useSpherex ? "[Gaia+2MASS+SPHEREx]" : "[Gaia+2MASS+WISE]"}`;
+  // Show only best-fit temperatures for single- and two-BB fits
+  fitSummaryEl.textContent = `Single-BB: T = ${fit.T} K; Two-BB: Ts = ${fit2.Ts} K, Td = ${fit2.Td} K ${useSpherex ? "[Gaia+2MASS+SPHEREx]" : "[Gaia+2MASS+WISE]"}`;
 
   // Update tables
   photTableBody.innerHTML = "";
@@ -427,6 +428,17 @@ function drawPlot(params, fit, modelPhot, modelSph) {
   const xticks = [0.3,0.5,0.75,1,1.5,2,3,4,5,6];
   ctx.fillStyle = "#556274"; ctx.strokeStyle = "#273142";
   for (const x of xticks) { const px = x2px(x); ctx.beginPath(); ctx.moveTo(px, 20); ctx.lineTo(px, H-40); ctx.stroke(); ctx.fillText(x.toString(), px-8, H-24); }
+
+  // Grid ticks (y, log scale) at powers of 10 Jy
+  const eMin = Math.floor(Math.log10(yMin));
+  const eMax = Math.ceil(Math.log10(yMax));
+  for (let e = eMin; e <= eMax; e++) {
+    const v = Math.pow(10, e);
+    const py = y2px(v);
+    ctx.beginPath(); ctx.moveTo(60, py); ctx.lineTo(W - 20, py); ctx.stroke();
+    const label = e === 0 ? "1" : `1e${e}`;
+    ctx.fillText(label, 12, py + 4);
+  }
 
   // Star+dust spectral curve (thin)
   ctx.strokeStyle = "#4ad295"; ctx.lineWidth = 1.5;
